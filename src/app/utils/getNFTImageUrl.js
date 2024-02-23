@@ -2,7 +2,6 @@ import { init } from "@airstack/airstack-react";
 import { fetchQuery } from "@airstack/airstack-react";
 
 export const getNFTImageUrl = async (tokenId) => {
-  console.log({ tokenId });
   init(process.env.AIRSTACK_API_KEY);
 
   const query = `
@@ -18,7 +17,6 @@ export const getNFTImageUrl = async (tokenId) => {
 `;
 
   const { data, error } = await fetchQuery(query);
-  console.log({ data });
 
   return data?.TokenNft?.contentValue?.image?.original;
 };

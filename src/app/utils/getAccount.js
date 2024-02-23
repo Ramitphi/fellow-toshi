@@ -8,11 +8,17 @@ export const getAccount = async (address) => {
   const query = `
   query MyQuery {
     Socials(
-      input: {filter: {userAssociatedAddresses: {_eq: "${address}"}, dappName: {_eq: farcaster}}, blockchain: ethereum}
+      input: {filter: {userAssociatedAddresses: {_eq: "${address}"}}, blockchain: ethereum}
     ) {
       Social {
         dappName
         profileName
+        profileBio
+        profileDisplayName
+        profileImage
+        profileUrl
+        userAddress
+        userAssociatedAddresses
       }
     }
   }
@@ -20,5 +26,6 @@ export const getAccount = async (address) => {
 
   const { data, error } = await fetchQuery(query);
 
+  console.log({ acc: data });
   return data?.Socials?.Social;
 };

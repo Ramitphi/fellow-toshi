@@ -2,7 +2,6 @@ import { init } from "@airstack/airstack-react";
 import { fetchQuery } from "@airstack/airstack-react";
 
 export const getNFTOwner = async (address) => {
-  console.log({ address });
   init(process.env.AIRSTACK_API_KEY);
 
   const query = `

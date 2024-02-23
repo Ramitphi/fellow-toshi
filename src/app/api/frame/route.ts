@@ -55,8 +55,10 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       console.log({ tokenId });
 
       user = await getAccount(uAddress);
+      console.log({ user });
+
       metadata = await getNFTImageUrl(tokenId);
-      console.log({ metadata });
+      // console.log({ metadata });
 
       // meetingLink = await getMeeting(accountAddress, uAddress);
 
@@ -84,12 +86,21 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
     const openseaLabel = resListing[0] ? `Buy ${price} ETH` : `Bid on Opensea`;
     const farcaster = user ? `${showuser} 🐱` : "Not on FC";
+
+    console.log({ farcaster });
+
     if (user) {
       return new NextResponse(
         getFrameHtmlResponse({
           buttons: [
             {
               label: "Next",
+            },
+
+            {
+              action: "link",
+              label: farcaster,
+              target: `https://warpcast.com/${farcaster}`,
             },
 
             {
@@ -110,7 +121,11 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
             {
               label: "Next",
             },
-
+            {
+              action: "link",
+              label: farcaster,
+              target: `https://warpcast.com/${farcaster}`,
+            },
             {
               action: "link",
               label: openseaLabel,

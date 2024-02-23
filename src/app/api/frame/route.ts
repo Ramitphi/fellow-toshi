@@ -12,7 +12,7 @@ import { getMeeting } from "../../utils/getMeeting";
 
 import { Redis } from "@upstash/redis";
 import { use } from "react";
-const NEXT_PUBLIC_URL = "https://7419-103-59-75-15.ngrok-free.app";
+const NEXT_PUBLIC_URL = "https://fellow-toshi.vercel.app";
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   let accountAddress: string | undefined = "";

@@ -9,10 +9,11 @@ import { getAccount } from "../../utils/getAccount";
 import { getNFTImageUrl } from "../../utils/getNFTImageUrl";
 import { getListing } from "../../utils/getListing";
 import { getMeeting } from "../../utils/getMeeting";
+
 import { getCollectionsStats } from "../../utils/getCollectionStats";
 
 import { Redis } from "@upstash/redis";
-import { use } from "react";
+
 const NEXT_PUBLIC_URL = "https://125e-103-59-75-203.ngrok-free.app";
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
@@ -72,7 +73,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       // }
       if (metadata) {
         console.log(i);
-
         const it = Math.random() * 190;
         await redis.set(accountAddress, it);
         break;
@@ -86,8 +86,10 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     console.log({ price });
 
     const openseaLabel = resListing[0] ? `Buy ${price} ETH` : `Bid on Opensea`;
-    const farcaster = user ? `${showuser} 🐱` : "Not on FC";
+
     const { floor_price, average_price } = await getCollectionsStats();
+
+    console.log(metadata);
 
     return new NextResponse(
       getFrameHtmlResponse({
@@ -97,16 +99,12 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
           },
           {
             action: "link",
-            label: openseaLabel,
+            label: "Bid",
 
             target: `https://opensea.io/assets/base/0xBDB1A8772409A0C5eEb347060cbf4B41dD7B2C62/${tokenId}`,
           },
-          {
-            label: `Floor: ${floor_price} ETH`,
-          },
-          {
-            label: `Avg: ${average_price} ETH`,
-          },
+          { label: `Floor:${floor_price} ETH` },
+          { label: `Avg:${average_price} ETH` },
         ],
         image: `${metadata}`,
         post_url: `${NEXT_PUBLIC_URL}/api/frame`,

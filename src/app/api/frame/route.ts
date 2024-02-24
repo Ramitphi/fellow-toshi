@@ -14,7 +14,7 @@ import { getCollectionsStats } from "../../utils/getCollectionStats";
 
 import { Redis } from "@upstash/redis";
 
-const NEXT_PUBLIC_URL = "https://125e-103-59-75-203.ngrok-free.app";
+const NEXT_PUBLIC_URL = "https://fellow-toshi.vercel.app";
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   let accountAddress: string | undefined = "";

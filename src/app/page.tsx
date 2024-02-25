@@ -1,12 +1,30 @@
 import { getFrameMetadata } from "@coinbase/onchainkit";
 import type { Metadata } from "next";
 
-const NEXT_PUBLIC_URL = "https://fellow-toshi.vercel.app";
+const NEXT_PUBLIC_URL = "https://78ca-103-59-75-203.ngrok-free.app";
 
 const frameMetadata = getFrameMetadata({
   buttons: [
     {
-      label: "Find Fellow ToshiCat",
+      label: "Website",
+      action: "link",
+      target: "https://www.toshithecat.com/",
+    },
+    {
+      label: "Twitter",
+      action: "link",
+      target: "https://twitter.com/Toshi_base",
+    },
+    {
+      label: "Opensea",
+      action: "link",
+      target: "https://opensea.io/collection/nftoshis-official",
+    },
+    {
+      label: "Basescan",
+      action: "link",
+      target:
+        "https://basescan.org/token/0xAC1Bd2486aAf3B5C0fc3Fd868558b082a531B2B4",
     },
   ],
   image: `${NEXT_PUBLIC_URL}/toshi.png`,

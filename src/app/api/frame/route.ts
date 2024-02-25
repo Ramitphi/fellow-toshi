@@ -14,7 +14,7 @@ import { getCollectionsStats } from "../../utils/getCollectionStats";
 
 import { Redis } from "@upstash/redis";
 
-const NEXT_PUBLIC_URL = "https://fellow-toshi.vercel.app";
+const NEXT_PUBLIC_URL = "https://78ca-103-59-75-203.ngrok-free.app";
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   let accountAddress: string | undefined = "";
@@ -35,78 +35,33 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     accountAddress = message.interactor.verified_accounts[0];
     const d: number | null = await redis.get(accountAddress);
 
-    const res = await getNFTOwner(accountAddress);
-
-    let tokenId;
-    let uAddress;
-    let metadata;
-    let meetingLink;
-    let listingPrice;
-    if (d) {
-      count = d;
-    } else {
-      count = 0;
-    }
-    let showuser;
-
-    for (let i = Math.floor(count) + 1; i < 200; i++) {
-      console.log(i);
-
-      uAddress = res[i]?.owner?.identity;
-      tokenId = res[i]?.tokenId;
-      console.log({ tokenId });
-
-      // user = await getAccount(uAddress);
-      // console.log({ user });
-
-      metadata = await getNFTImageUrl(tokenId);
-      // console.log({ metadata });
-
-      // meetingLink = await getMeeting(accountAddress, uAddress);
-
-      // if (user) {
-      //   showuser = user[0]?.profileName;
-
-      //   const it = Math.random() * 190;
-      //   await redis.set(accountAddress, it);
-      //   break;
-      // }
-      if (metadata) {
-        console.log(i);
-        const it = Math.random() * 190;
-        await redis.set(accountAddress, it);
-        break;
-      }
-    }
-    let price;
-    const resListing = await getListing(tokenId);
-    if (resListing[0]?.current_price) {
-      price = resListing[0]?.current_price / Math.pow(10, 18);
-    }
-    console.log({ price });
-
-    const openseaLabel = resListing[0] ? `Buy ${price} ETH` : `Bid on Opensea`;
-
-    const { floor_price, average_price } = await getCollectionsStats();
-
-    console.log(metadata);
-
     return new NextResponse(
       getFrameHtmlResponse({
         buttons: [
           {
-            label: "Next",
+            label: "Website",
+            action: "link",
+            target: "https://www.toshithecat.com/",
           },
           {
+            label: "Twitter",
             action: "link",
-            label: "Bid",
-
-            target: `https://opensea.io/assets/base/0xBDB1A8772409A0C5eEb347060cbf4B41dD7B2C62/${tokenId}`,
+            target: "https://twitter.com/Toshi_base",
           },
-          { label: `Floor:${floor_price} ETH` },
-          { label: `Avg:${average_price} ETH` },
+          {
+            label: "Opensea",
+            action: "link",
+            target: "https://opensea.io/collection/nftoshis-official",
+          },
+          {
+            label: "Basescan",
+            action: "link",
+            target:
+              "https://basescan.org/token/0xAC1Bd2486aAf3B5C0fc3Fd868558b082a531B2B4",
+          },
         ],
-        image: `${metadata}`,
+        image: `${NEXT_PUBLIC_URL}/toshi.png`,
+
         post_url: `${NEXT_PUBLIC_URL}/api/frame`,
       })
     );

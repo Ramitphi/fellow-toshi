@@ -78,14 +78,14 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         break;
       }
     }
-    let price;
-    const resListing = await getListing(tokenId);
-    if (resListing[0]?.current_price) {
-      price = resListing[0]?.current_price / Math.pow(10, 18);
-    }
-    console.log({ price });
+    // let price;
+    // const resListing = await getListing(tokenId);
+    // if (resListing[0]?.current_price) {
+    //   price = resListing[0]?.current_price / Math.pow(10, 18);
+    // }
+    // console.log({ price });
 
-    const openseaLabel = resListing[0] ? `Buy ${price} ETH` : `Bid on Opensea`;
+    // const openseaLabel = resListing[0] ? `Buy ${price} ETH` : `Bid on Opensea`;
 
     // const { floor_price, average_price } = await getCollectionsStats();
 

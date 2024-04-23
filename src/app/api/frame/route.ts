@@ -87,7 +87,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
     const openseaLabel = resListing[0] ? `Buy ${price} ETH` : `Bid on Opensea`;
 
-    const { floor_price, average_price } = await getCollectionsStats();
+    // const { floor_price, average_price } = await getCollectionsStats();
 
     console.log(metadata);
 
@@ -103,8 +103,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
             target: `https://opensea.io/assets/base/0xBDB1A8772409A0C5eEb347060cbf4B41dD7B2C62/${tokenId}`,
           },
-          { label: `Floor:${floor_price} ETH` },
-          { label: `Avg:${average_price} ETH` },
         ],
         image: `${metadata}`,
         post_url: `${NEXT_PUBLIC_URL}/api/frame`,

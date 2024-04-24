@@ -19,9 +19,12 @@ const NEXT_PUBLIC_URL = "https://fellow-toshi.vercel.app";
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   let accountAddress: string | undefined = "";
   const body: FrameRequest = await req.json();
+
   const { isValid, message } = await getFrameMessage(body, {
     neynarApiKey: "9269D1DF-9073-4D62-96AD-E8AA03CD9C12",
   });
+  console.log({ message, isValid });
+
   let count;
 
   let user;
@@ -31,11 +34,15 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       "AajfACQgZWNjMjhkYWUtYTdkMC00MmNjLWFlYjYtOWVkZjMxZGZiOTg3ODllMTE0OGJjMmY0NDYxYThjODUxN2QyOTRmZjZjN2Y=",
   });
 
+  console.log({ message, isValid });
+
   if (isValid) {
     accountAddress = message.interactor.verified_accounts[0];
     const d: number | null = await redis.get(accountAddress);
+    console.log({ d });
 
     const res = await getNFTOwner(accountAddress);
+    // console.log(res);
 
     let tokenId;
     let uAddress;
@@ -54,15 +61,11 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
       uAddress = res[i]?.owner?.identity;
       tokenId = res[i]?.tokenId;
-      console.log({ tokenId });
 
       // user = await getAccount(uAddress);
       // console.log({ user });
 
       metadata = await getNFTImageUrl(tokenId);
-      // console.log({ metadata });
-
-      // meetingLink = await getMeeting(accountAddress, uAddress);
 
       // if (user) {
       //   showuser = user[0]?.profileName;
@@ -100,7 +103,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
           {
             action: "link",
             label: "Bid",
-
             target: `https://opensea.io/assets/base/0xBDB1A8772409A0C5eEb347060cbf4B41dD7B2C62/${tokenId}`,
           },
         ],

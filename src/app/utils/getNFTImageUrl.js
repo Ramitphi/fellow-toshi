@@ -6,10 +6,15 @@ export const getNFTImageUrl = async (tokenId) => {
 
   const query = `
   query MyQuery {
-    TokenNft(input: {address: "0xBDB1A8772409A0C5eEb347060cbf4B41dD7B2C62", tokenId: "${tokenId}", blockchain: base}) {
-      contentValue {
-        image {
-          original
+    TokenNfts(
+      input: {filter: {address: {_eq: "0xBDB1A8772409A0C5eEb347060cbf4B41dD7B2C62"}, tokenId: {_eq: "100"}}, blockchain: base}
+    ) {
+   
+      TokenNft {
+        contentValue {
+          image {
+            original
+          }
         }
       }
     }
@@ -17,6 +22,7 @@ export const getNFTImageUrl = async (tokenId) => {
 `;
 
   const { data, error } = await fetchQuery(query);
+  console.log({ data, error });
 
-  return data?.TokenNft?.contentValue?.image?.original;
+  return data?.TokenNfts?.TokenNft[0].contentValue?.image?.original;
 };

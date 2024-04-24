@@ -81,18 +81,18 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         break;
       }
     }
-    // let price;
-    // const resListing = await getListing(tokenId);
-    // if (resListing[0]?.current_price) {
-    //   price = resListing[0]?.current_price / Math.pow(10, 18);
-    // }
-    // console.log({ price });
+    let price;
+    const resListing = await getListing(tokenId);
+    if (resListing[0]?.current_price) {
+      price = resListing[0]?.current_price / Math.pow(10, 18);
+    }
+    console.log({ price });
 
-    // const openseaLabel = resListing[0] ? `Buy ${price} ETH` : `Bid on Opensea`;
+    const openseaLabel = resListing[0] ? `Buy ${price} ETH` : `Bid on Opensea`;
 
-    // const { floor_price, average_price } = await getCollectionsStats();
+    const { floor_price, average_price } = await getCollectionsStats();
 
-    console.log(metadata);
+    console.log({ metadata, openseaLabel, floor_price, average_price });
 
     return new NextResponse(
       getFrameHtmlResponse({
@@ -102,9 +102,11 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
           },
           {
             action: "link",
-            label: "Bid",
+            label: `${openseaLabel}`,
             target: `https://opensea.io/assets/base/0xBDB1A8772409A0C5eEb347060cbf4B41dD7B2C62/${tokenId}`,
           },
+          { label: `Floor: ${floor_price}` },
+          { label: `Avg: ${average_price}` },
         ],
         image: `${metadata}`,
         post_url: `${NEXT_PUBLIC_URL}/api/frame`,

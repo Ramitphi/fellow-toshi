@@ -7,7 +7,7 @@ export const getNFTImageUrl = async (tokenId) => {
   const query = `
   query MyQuery {
     TokenNfts(
-      input: {filter: {address: {_eq: "0xBDB1A8772409A0C5eEb347060cbf4B41dD7B2C62"}, tokenId: {_eq: '${tokenId}'}}, blockchain: base}
+      input: {filter: {address: {_eq: "0xBDB1A8772409A0C5eEb347060cbf4B41dD7B2C62"}, tokenId: {_eq: "${tokenId}"}}, blockchain: base}
     ) {
    
       TokenNft {

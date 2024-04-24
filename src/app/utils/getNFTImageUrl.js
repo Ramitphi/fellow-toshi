@@ -13,7 +13,7 @@ export const getNFTImageUrl = async (tokenId) => {
       TokenNft {
         contentValue {
           image {
-            original
+            small
           }
         }
       }
@@ -24,5 +24,5 @@ export const getNFTImageUrl = async (tokenId) => {
   const { data, error } = await fetchQuery(query);
   console.log({ data, error });
 
-  return data?.TokenNfts?.TokenNft[0].contentValue?.image?.original;
+  return data?.TokenNfts?.TokenNft[0].contentValue?.image?.small;
 };
